@@ -28,6 +28,12 @@ const counterReducer = (
   switch (action.type) {
     case 'reset':
       return { counter: 0, changes: 0, previous: 0 };
+    case 'increaseBy':
+      return {
+        counter: state.counter + action.payload.value,
+        changes: state.changes + 1,
+        previous: state.previous,
+      };
     default:
       return state;
   }
@@ -35,14 +41,20 @@ const counterReducer = (
 
 export const CounterReducerComponent = () => {
   const [{ counter }, dispatch] = useReducer(counterReducer, INITIAL_STATE);
-  const handleClick = () => {
-    // dispatch({ type: 'increaseBy', payload: { value: 5 } });
+  const onReset = () => {
     dispatch({ type: 'reset' });
+  };
+
+  const increaseBy = (value: number) => {
+    dispatch({ type: 'increaseBy', payload: { value } });
   };
   return (
     <>
       <h1>Counter Reducer: {counter}</h1>
-      <button onClick={handleClick}>+1</button>
+      <button onClick={() => increaseBy(1)}>+1</button>
+      <button onClick={() => increaseBy(5)}>+5</button>
+      <button onClick={() => increaseBy(10)}>+10</button>
+      <button onClick={onReset}>Reset</button>
     </>
   );
 };
