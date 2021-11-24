@@ -1,6 +1,7 @@
 import { useReducer } from 'react';
 import { CounterState } from './interfaces/counter.interfaces';
 import { counterReducer } from './state/counterReducer';
+import * as CounterActions from './actions/counter.actions';
 
 const INITIAL_STATE: CounterState = {
   counter: 0,
@@ -11,11 +12,11 @@ const INITIAL_STATE: CounterState = {
 export const CounterReducerComponent = () => {
   const [state, dispatch] = useReducer(counterReducer, INITIAL_STATE);
   const onReset = () => {
-    dispatch({ type: 'reset' });
+    dispatch(CounterActions.doReset());
   };
 
   const increaseBy = (value: number) => {
-    dispatch({ type: 'increaseBy', payload: { value } });
+    dispatch(CounterActions.doIncreaseBy(value));
   };
   return (
     <>
